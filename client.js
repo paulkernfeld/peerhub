@@ -18,6 +18,8 @@ var Client = module.exports = function(uri, opts, cb) {
   this.opts = opts;
   this.uri = uri;
 
+  this.wrtc = opts.wrtc
+
   this.pendingPeers = {};
 
   this.handlers = new EventEmitter;
@@ -80,7 +82,7 @@ Client.prototype.accept = function(onConnect) {
 Client.prototype.connect = function(peerId, cb) {
   var self = this;
   if(this.pendingPeers[peerId]) return;
-  var peer = this.pendingPeers[peerId] = new SimplePeer({ initiator: true, wrtc: require('wrtc') });
+  var peer = this.pendingPeers[peerId] = new SimplePeer({ initiator: true, wrtc: self.wrtc });
   peer.on('signal', function(signalData) {
     self.conn.send(JSON.stringify({ event: 'signal', to: peerId, signal: signalData }));
   });
@@ -98,7 +100,7 @@ Client.prototype.onSignal = function(data) {
 
     this.emit('signal', data);
 
-    peer = this.pendingPeers[data.from] = new SimplePeer({ wrtc: require('wrtc') });
+    peer = this.pendingPeers[data.from] = new SimplePeer({ wrtc: self.wrtc });
     peer.on('signal', function(signalData) {
       self.conn.send(JSON.stringify({
         event: 'signal',

@@ -1,6 +1,6 @@
 {
   "name": "peerhub",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Peer discovery and signalling for WebRTC P2P networks",
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,5 @@
   "devDependencies": {
     "browserify": "^9.0.8",
     "uglify-js": "^2.4.20"
-  },
-  "optionalDependencies": {
-    "wrtc": "0.0.55"
   }
 }

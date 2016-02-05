@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+// You must install wrtc (or a substitute) for this example to work
+
 var Client = require('../client.js');
 // connect to a seed server at localhost
-var client = new Client('localhost:8192', function() {
+var client = new Client('localhost:8192', {wrtc: require('wrtc')}, function() {
   console.log('connected to seed server:', client.uri);
 
   client.on('connection', function(id, peer) {
