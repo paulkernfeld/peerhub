@@ -31,6 +31,7 @@ var Client = module.exports = function(uri, opts, cb) {
   this.conn = new WebSocket('ws://'+this.uri);
   this.conn.onopen = function() { self.emit('connect'); }
   this.conn.onmessage = this.onMessage.bind(this);
+  this.conn.onerror = function(err) { self.emit('error', err); }
 };
 util.inherits(Client, EventEmitter);
 
